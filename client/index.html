@@ -1,0 +1,33 @@
+<html>
+    <head>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.3/socket.io.js" integrity="sha512-2RDFHqfLZW8IhPRvQYmK9bTLfj/hddxGXQAred2wNZGkrKQkLGj8RCkXfRJPHlDerdHHIzTFaahq4s/P4V6Qig==" crossorigin="anonymous"></script>
+        <script>
+            var socket = io({
+                transports: ["websocket"],
+                withCredentials:true,
+                extraHeaders: {
+                    "jwt": "123"
+                }
+            });
+
+            socket.on('editDocument', (msg) => {
+                console.log('editDocument: ' + msg);
+            });
+            socket.on('viewDocument', (msg) => {
+                console.log('viewDocument: ' + msg);
+            });
+            socket.on('documentViewers', (msg) => {
+                console.log('documentViewers: ' + msg);
+            });
+            socket.on('error', (msg) => {
+                console.log('error: ' + msg);
+            });
+            socket.emit("viewDocument",JSON.stringify({_id:"605f137e312ef60aad97521d"}) )
+            setTimeout(()=>{
+                socket.emit("editDocument", JSON.stringify({_id:"605f137e312ef60aad97521d", body:"test text "+(new Date())}));
+            },1000)
+
+        </script>
+    </head>
+    <body></body>
+</html>
